@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\TicketEntry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class TicketEntryController extends Controller
 {
@@ -36,6 +37,8 @@ class TicketEntryController extends Controller
      */
     public function store(Request $request)
     {
+//        Log::debug(print_r($request->all(), true));
+
         $data = $this->validate($request, [
             'msisdn' => 'required',
             'text' => 'required'
@@ -52,7 +55,7 @@ class TicketEntryController extends Controller
         $entry->user()->associate($user);
         $entry->ticket()->associate($ticket);
         $entry->save();
-
+        
         return response('', 204);
     }
 
